@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  app:
+    image: golang:1.13.7-alpine
+    volumes:
+      - .:/go/go-worker-pool-poc
+    working_dir: /go/go-worker-pool-poc
+    command: go run app/main.go
+    links:
+      - redis
+
+  redis:
+    image: redis:alpine
