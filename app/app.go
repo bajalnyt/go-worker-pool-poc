@@ -1,16 +1,14 @@
 package app
 
 import (
-	"fmt"
-	redis "github.com/go-redis/redis/v8"
+	"github.com/gorilla/mux"
+	"log"
+	"net/http"
 )
 
-func main() {
-	client := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
-	})
-	pong, err := client.Ping().Result()
-	fmt.Println(pong, err)
+func Start() {
+	//Declare endpoints
+	router := mux.NewRouter()
+	router.HandleFunc("/greeting", greet).Methods(http.MethodGet)
+	log.Fatal(http.ListenAndServe("0.0.0.0:8000", router))
 }

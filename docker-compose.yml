@@ -6,9 +6,15 @@ services:
     volumes:
       - .:/go/go-worker-pool-poc
     working_dir: /go/go-worker-pool-poc
-    command: go run app/main.go
+    command: go run main.go
+    ports:
+      - "8000:8000"
     links:
       - redis
+    environment:
+      REDIS_URL: redis:6379
 
   redis:
     image: redis:alpine
+    ports:
+      - "6379:6379"
